@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Letter for You</title>
+
+    <!-- Fonts & Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="antialiased">
+
+    <!-- Dynamic Background -->
+    <div id="bg-hearts" class="bg-hearts"></div>
+
+    <!-- Dodge Comment Bubble -->
+    <div id="noComment">Are you sure? 🤨</div>
+
+    <!-- Music Indicator -->
+    <div class="fixed top-8 left-8 z-50 flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
+        <div class="glass px-5 py-2.5 rounded-full flex items-center gap-3 text-rose-500 border border-rose-100/50">
+            <span class="animate-pulse text-lg">🎵</span>
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-rose-400">Our Story</span>
+        </div>
+    </div>
+
+    <div class="page-container">
+
+        <!-- PAGE 1: THE ENVELOPE -->
+        <div id="page1" class="page">
+            <div class="text-center z-10">
+                <div class="mb-12 cursor-pointer relative group" onclick="nextPage(2)">
+                    <!-- Animated Pulse Ring -->
+                    <div
+                        class="absolute inset-0 bg-rose-200 rounded-xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-700 animate-pulse">
+                    </div>
+
+                    <!-- Envelope Graphic -->
+                    <div
+                        class="w-52 h-36 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] rounded-xl mx-auto relative flex items-center justify-center border-t-[40px] border-rose-50 transform group-hover:-translate-y-2 transition-transform duration-500">
+                        <div
+                            class="absolute -top-6 w-12 h-12 bg-rose-400 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                            <span class="text-white text-lg">❤</span>
+                        </div>
+                        <p class="cursive text-3xl text-rose-200 pt-2">For You</p>
+                    </div>
+                </div>
+                <h2 class="serif text-5xl text-rose-900 italic font-medium tracking-wide">To My Dearest...</h2>
+                <p class="mt-4 text-rose-400/80 text-sm uppercase tracking-widest animate-bounce">Tap to open</p>
+            </div>
+        </div>
+
+        <!-- PAGE 2: PERSONAL MESSAGE -->
+        <div id="page2" class="page hidden">
+            <div class="glass p-10 md:p-16 rounded-[3rem] text-center max-w-xl w-full relative mx-4">
+                <div class="absolute -top-12 -left-12 text-8xl opacity-10 rotate-12 pointer-events-none select-none">🌹
+                </div>
+                <h1 class="serif text-4xl text-rose-900 mb-8 tracking-tight italic font-bold">Why you mean so much...
+                </h1>
+
+                <div class="min-h-[200px] mb-10 flex items-center justify-center">
+                    <p id="typewriter-text" class="text-rose-800/80 leading-loose italic text-xl typewriter-text"></p>
+                </div>
+
+                <div
+                    class="h-px bg-gradient-to-r from-transparent via-rose-200 to-transparent w-full max-w-[200px] mx-auto mb-8">
+                </div>
+
+                <button onclick="nextPage(3)"
+                    class="btn-berry text-white px-12 py-4 rounded-full font-bold text-lg shadow-lg">
+                    Continue <span class="ml-2">→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE 3: DATE PLAN SELECTION -->
+        <div id="page3" class="page hidden">
+            <div class="glass p-8 md:p-14 rounded-[3rem] text-center max-w-4xl w-full mx-4">
+                <h1 class="cursive text-5xl text-rose-500 mb-4">Our Next Adventure</h1>
+                <p class="text-rose-400 mb-12 text-sm font-semibold tracking-wide uppercase">Select your perfect date
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="date-option polaroid p-4 cursor-pointer" onclick="selectDate(this)">
+                        <div
+                            class="bg-rose-50/50 h-40 rounded-lg mb-4 flex items-center justify-center text-6xl shadow-inner">
+                            🚗</div>
+                        <h3 class="font-bold text-rose-900 text-lg">Coastal Drive</h3>
+                        <p class="text-[10px] text-rose-400 mt-2 uppercase tracking-widest font-bold">Ocean Breeze</p>
+                    </div>
+                    <div class="date-option polaroid p-4 cursor-pointer" onclick="selectDate(this)"
+                        style="transition-delay: 100ms">
+                        <div
+                            class="bg-rose-50/50 h-40 rounded-lg mb-4 flex items-center justify-center text-6xl shadow-inner">
+                            🌲</div>
+                        <h3 class="font-bold text-rose-900 text-lg">Cabin Retreat</h3>
+                        <p class="text-[10px] text-rose-400 mt-2 uppercase tracking-widest font-bold">Cozy Nights</p>
+                    </div>
+                    <div class="date-option polaroid p-4 cursor-pointer" onclick="selectDate(this)"
+                        style="transition-delay: 200ms">
+                        <div
+                            class="bg-rose-50/50 h-40 rounded-lg mb-4 flex items-center justify-center text-6xl shadow-inner">
+                            ☕</div>
+                        <h3 class="font-bold text-rose-900 text-lg">Bookstore Date</h3>
+                        <p class="text-[10px] text-rose-400 mt-2 uppercase tracking-widest font-bold">Coffee & Books</p>
+                    </div>
+                </div>
+
+                <button id="adventureBtn" onclick="nextPage(4)"
+                    class="opacity-30 pointer-events-none btn-berry text-white px-16 py-4 rounded-full font-bold text-lg shadow-xl transition-all duration-300">
+                    Choose an Adventure first
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE 4: THE BIG QUESTION -->
+        <div id="page4" class="page hidden">
+            <div class="glass p-12 md:p-20 rounded-[4rem] text-center max-w-3xl w-full mx-4 relative overflow-hidden">
+                <!-- Decorative background elements -->
+                <div
+                    class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-rose-300 to-transparent opacity-50">
+                </div>
+
+                <h2 id="questionHeader"
+                    class="serif text-5xl md:text-7xl text-rose-900 mb-16 italic font-bold leading-tight">Will you be my
+                    Valentine?</h2>
+
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-10 min-h-[120px] relative z-10">
+                    <button id="yesBtn" onclick="celebrate()"
+                        class="btn-berry text-white px-20 py-6 rounded-2xl font-bold text-3xl shadow-2xl hover:scale-110 transition-transform duration-300">
+                        YES! 💖
+                    </button>
+                    <!-- NO BUTTON: Bouncing and Teleporting -->
+                    <button id="noBtn" onmouseover="dodge(event)" onclick="dodge(event)"
+                        class="text-rose-300 font-bold hover:text-rose-500 text-xl transition-colors bouncing px-8 py-4 bg-white/50 rounded-xl border border-rose-100 hover:bg-white hover:border-rose-200">
+                        No
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: SUCCESS SCREEN -->
+        <div id="page5" class="page hidden">
+            <div class="text-center z-10">
+                <div
+                    class="w-40 h-40 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-10 shadow-[0_20px_60px_rgba(255,133,161,0.4)] animate-pulse">
+                    <span class="text-8xl">💍</span>
+                </div>
+                <h1 class="serif text-6xl md:text-8xl text-rose-900 mb-8 italic font-bold drop-shadow-sm">Forever
+                    Begins...</h1>
+                <p class="text-2xl text-rose-500 font-medium mb-16 tracking-widest">I'm the luckiest person in the
+                    world.</p>
+                <div
+                    class="glass p-12 rounded-[2.5rem] border-dashed border-2 border-rose-200 max-w-lg mx-auto bg-white/60">
+                    <p class="text-2xl text-rose-800/80 italic leading-relaxed font-serif">"Pack your heart... our
+                        adventure starts today. I promise to love you through every sunset and every road trip."</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FIXED PROGRESS BAR -->
+    <div id="progress" class="progress-container transition-opacity duration-1000">
+        <div class="progress-line">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
