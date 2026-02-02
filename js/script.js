@@ -191,10 +191,30 @@ function toggleMusic() {
 }
 
 // Auto-play music on first interaction (browser policy)
+// Auto-play music logic
+window.addEventListener('load', () => {
+    const attemptPlay = audio.play();
+    if (attemptPlay !== undefined) {
+        attemptPlay.then(() => {
+            musicIcon.innerText = "🎵";
+            musicText.innerText = "Pause Music";
+            musicIcon.classList.add('animate-spin');
+            isPlaying = true;
+        }).catch(error => {
+            console.log("Autoplay prevented:", error);
+            // Show a subtle hint to click
+            musicText.innerText = "Click to Play 🎵";
+            musicIcon.classList.add('animate-bounce');
+        });
+    }
+});
+
 let hasInteracted = false;
 document.addEventListener('click', () => {
-    if (!hasInteracted && !isPlaying) {
-        toggleMusic();
+    if (!hasInteracted) {
+        if (!isPlaying) {
+            toggleMusic();
+        }
         hasInteracted = true;
     }
 }, { once: true });
