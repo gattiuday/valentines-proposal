@@ -1,26 +1,11 @@
 /**
- * Enhancements:
- * - Typewriter effect for the letter
- * - Smoother transitions
- * - Dynamic background generation
+ * WEBSITE STATE MANAGEMENT
  */
+let noCount = 0;
+let selectedDatePlan = "";
 
-// Configuration
-const CONFIG = {
-    typewriterSpeed: 40, // ms per char
-    noBtnPad: 80, // padding from edge for dodge
-    bgHeartsCount: 15, // number of floating background hearts
-};
-
-// State
-let state = {
-    noCount: 0,
-    selectedDate: null,
-    currentPage: 1,
-    isTyping: false
-};
-
-const NO_TEXTS = [
+// Custom guilt-trip messages that appear in the bubble above the No button
+const noTexts = [
     "Are you sure? 🤨",
     "Really sure? 🥺",
     "Think again! 💭",
@@ -33,189 +18,128 @@ const NO_TEXTS = [
     "Pookkie please? 🥺"
 ];
 
-const LETTER_TEXT = "In a world full of noise, you are my favorite melody. It’s the small things—the way you look when you're thinking, the kindness you show everyone, and how you make 'home' feel like a person.\n\nEvery day with you is a new favorite memory.";
-
 /**
- * INITIALIZATION
- */
-document.addEventListener('DOMContentLoaded', () => {
-    createBackgroundHearts();
-});
-
-function createBackgroundHearts() {
-    const container = document.getElementById('bg-hearts');
-    for (let i = 0; i < CONFIG.bgHeartsCount; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('bg-heart');
-        heart.style.left = Math.random() * 100 + '%';
-        heart.style.animationDelay = Math.random() * 10 + 's';
-        heart.style.animationDuration = (10 + Math.random() * 10) + 's';
-        heart.style.opacity = Math.random() * 0.5 + 0.1;
-        heart.style.transform = `scale(${Math.random() * 0.5 + 0.5}) rotate(45deg)`;
-        container.appendChild(heart);
-    }
-}
-
-/**
- * NAVIGATION
- */
-function nextPage(n) {
-    // Prevent double clicking triggering weird states
-    if (state.currentPage === n) return;
-
-    // Hide current
-    document.getElementById(`page${state.currentPage}`).classList.add('hidden');
-
-    // Show next
-    const target = document.getElementById(`page${n}`);
-    target.classList.remove('hidden');
-    state.currentPage = n;
-
-    // Progress Bar
-    const fill = document.getElementById('progress-fill');
-    if (fill) fill.style.width = ((n - 1) / 4 * 100) + '%';
-    if (n === 5) document.getElementById('progress').style.opacity = '0';
-
-    // Special Page Actions
-    if (n === 2) {
-        startTypewriter();
-    }
-}
-
-/**
- * TYPEWRITER EFFECT
- */
-function startTypewriter() {
-    if (state.isTyping) return;
-    state.isTyping = true;
-
-    const element = document.getElementById('typewriter-text');
-    element.innerHTML = ""; // Clear initial
-    let i = 0;
-
-    function type() {
-        if (i < LETTER_TEXT.length) {
-            element.innerHTML += LETTER_TEXT.charAt(i);
-            i++;
-            setTimeout(type, CONFIG.typewriterSpeed);
-        } else {
-            element.style.borderRight = "none"; // Stop blinking cursor
-        }
-    }
-    // Small delay before typing starts for effect
-    setTimeout(type, 500);
-}
-
-/**
- * SELECTION LOGIC
+ * Date Selection Logic
  */
 function selectDate(el) {
     document.querySelectorAll('.date-option').forEach(d => d.classList.remove('selected'));
     el.classList.add('selected');
-    state.selectedDate = el.querySelector('h3').innerText;
-
+    selectedDatePlan = el.querySelector('h3').innerText;
     const btn = document.getElementById('adventureBtn');
     btn.classList.remove('opacity-30', 'pointer-events-none');
-    btn.innerText = `Yes, let's do ${state.selectedDate}!`;
 }
 
 /**
- * DODGE LOGIC
+ * Page Navigation Logic
+ */
+function nextPage(n) {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    const target = document.getElementById(`page${n}`);
+    if (target) target.classList.remove('hidden');
+
+    // Update the website's progress bar
+    const fill = document.getElementById('progress-fill');
+    fill.style.width = ((n - 1) / 4 * 100) + '%';
+
+    // Hide progress on the finale
+    if (n === 5) document.getElementById('progress').style.display = 'none';
+}
+
+/**
+ * NO BUTTON DODGE LOGIC:
+ * This section handles the playful avoidance mechanism.
+ * 1. The comment bubble is updated and positioned exactly above the button.
+ * 2. The button is moved to a random safe coordinate on the screen.
+ * 3. The transitions are synced to make the bubble look attached to the button.
  */
 function dodge(e) {
-    if (window.innerWidth < 768) return; // Optional: disable on mobile if too hard
-
     const btn = document.getElementById('noBtn');
     const comment = document.getElementById('noComment');
     const head = document.getElementById('questionHeader');
 
-    state.noCount++;
+    noCount++;
 
-    // Text Update
-    comment.innerText = NO_TEXTS[Math.min(state.noCount - 1, NO_TEXTS.length - 1)];
+    // 1. Update the comment bubble text and show it
+    comment.innerText = noTexts[Math.min(noCount - 1, noTexts.length - 1)];
     comment.style.opacity = "1";
 
-    // Random Position
-    const btnW = btn.offsetWidth;
-    const btnH = btn.offsetHeight;
-    const maxX = window.innerWidth - btnW - CONFIG.noBtnPad;
-    const maxY = window.innerHeight - btnH - CONFIG.noBtnPad;
+    // 2. DODGE LOGIC: Calculate random viewport coordinates
+    const pad = 100; // Screen margin buffer
+    const btnWidth = btn.offsetWidth;
+    const btnHeight = btn.offsetHeight;
 
-    const x = Math.max(CONFIG.noBtnPad, Math.random() * maxX);
-    const y = Math.max(CONFIG.noBtnPad, Math.random() * maxY);
+    const x = Math.random() * (window.innerWidth - btnWidth - pad * 2) + pad;
+    const y = Math.random() * (window.innerHeight - btnHeight - pad * 2) + pad;
 
-    // Move Button
+    // Move the button
     btn.style.position = 'fixed';
     btn.style.left = `${x}px`;
     btn.style.top = `${y}px`;
 
-    // Move Comment Bubble (anchored top-center of button)
-    comment.style.left = `${x + (btnW / 2) - (comment.offsetWidth / 2)}px`;
-    comment.style.top = `${y - 50}px`;
+    // 3. Move the comment bubble to stay EXACTLY centered on top of the button
+    // Centering: X = ButtonLeft + (ButtonWidth/2) - (CommentWidth/2)
+    comment.style.left = `${x + (btnWidth / 2) - (comment.offsetWidth / 2)}px`;
+    comment.style.top = `${y - 65}px`;
 
-    // Visual Intensification
-    if (state.noCount > 5) {
+    // 4. Update the website header text based on user persistence
+    if (noCount === 5) {
+        head.innerText = "Don't break my heart... 💔";
         head.style.color = "#800f2f";
+    }
+    if (noCount >= 10) {
+        head.innerText = "Okay, now you're just being mean! 😭";
     }
 }
 
 /**
- * CELEBRATION
+ * Celebration Confetti System
  */
 function celebrate() {
+    // Hide the comment bubble immediately upon success
     document.getElementById('noComment').style.opacity = "0";
+
     nextPage(5);
+    const container = document.body;
+    const colors = ['#ff85a1', '#ff4d6d', '#ffb3c1', '#ffd700', '#ffffff'];
 
-    // Launch massive confetti
-    const end = Date.now() + 3000;
-    const colors = ['#ff85a1', '#ff4d6d', '#ffb3c1', '#ffffff'];
+    for (let i = 0; i < 220; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti';
 
-    (function frame() {
-        confettiCannon();
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
+        const isHeart = Math.random() > 0.7;
+        if (isHeart) {
+            p.innerHTML = `<div class="heart-particle" style="background:${colors[Math.floor(Math.random() * colors.length)]}"></div>`;
+        } else {
+            p.style.width = Math.random() * 8 + 4 + 'px';
+            p.style.height = Math.random() * 12 + 8 + 'px';
+            p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         }
-    }());
-}
 
-function confettiCannon() {
-    const container = document.body; // or specific container
-    const p = document.createElement('div');
-    p.className = 'confetti';
+        let x = window.innerWidth / 2;
+        let y = window.innerHeight / 2;
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 8 + Math.random() * 28;
+        let vx = Math.cos(angle) * velocity;
+        let vy = Math.sin(angle) * velocity - 18;
+        let rot = Math.random() * 360;
+        let op = 1;
 
-    const isHeart = Math.random() > 0.5;
-    if (isHeart) {
-        p.innerHTML = `<div class="heart-particle"></div>`;
-        p.querySelector('.heart-particle').style.backgroundColor = ['#ff85a1', '#ff4d6d'][Math.floor(Math.random() * 2)];
-    } else {
-        p.style.width = Math.random() * 8 + 4 + 'px';
-        p.style.height = Math.random() * 12 + 6 + 'px';
-        p.style.background = ['#ffdac1', '#e2f0cb', '#b5ead7', '#ff9aa2'][Math.floor(Math.random() * 4)];
+        container.appendChild(p);
+
+        function step() {
+            x += vx;
+            y += vy;
+            vy += 0.55;
+            vx *= 0.985;
+            rot += 15;
+            op -= 0.007;
+
+            p.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
+            p.style.opacity = op;
+
+            if (op > 0) requestAnimationFrame(step);
+            else p.remove();
+        }
+        requestAnimationFrame(step);
     }
-
-    let x = window.innerWidth / 2;
-    let y = window.innerHeight / 2;
-    // Explode outwards
-    const angle = Math.random() * Math.PI * 2;
-    const velocity = 10 + Math.random() * 20;
-    let vx = Math.cos(angle) * velocity;
-    let vy = Math.sin(angle) * velocity - 5;
-
-    container.appendChild(p);
-
-    let opacity = 1;
-    function animate() {
-        x += vx;
-        y += vy;
-        vy += 0.5; // Gravity
-        vx *= 0.95; // Drag
-        opacity -= 0.01;
-
-        p.style.transform = `translate(${x}px, ${y}px)`;
-        p.style.opacity = opacity;
-
-        if (opacity > 0) requestAnimationFrame(animate);
-        else p.remove();
-    }
-    requestAnimationFrame(animate);
 }

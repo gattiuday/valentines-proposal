@@ -3,30 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Letter for You</title>
-
-    <!-- Fonts & Tailwind -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise for You</title>
+    <!-- Importing Tailwind for a clean, modern website layout -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
         rel="stylesheet">
-
-    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="antialiased">
 
-    <!-- Dynamic Background -->
-    <div id="bg-hearts" class="bg-hearts"></div>
-
-    <!-- Dodge Comment Bubble -->
+    <!-- Conversation/Comment Bubble for the No Button -->
     <div id="noComment">Are you sure? 🤨</div>
 
-    <!-- Music Indicator -->
-    <div class="fixed top-8 left-8 z-50 flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform"
-        title="Our Song">
+    <!-- Website Header Decoration -->
+    <div class="fixed top-8 left-8 z-50 flex items-center gap-3">
         <div class="glass px-5 py-2.5 rounded-full flex items-center gap-3 text-rose-500 border border-rose-100/50">
             <span class="animate-pulse text-lg">🎵</span>
             <span class="text-xs font-bold uppercase tracking-[0.2em] text-rose-400">Our Story</span>
@@ -35,148 +28,140 @@
 
     <div class="page-container">
 
-        <!-- PAGE 1: THE ENVELOPE -->
+        <!-- SECTION 1: THE WELCOME (ENVELOPE) -->
         <div id="page1" class="page">
-            <div class="text-center z-10">
-                <div class="mb-12 cursor-pointer relative group" onclick="nextPage(2)">
-                    <!-- Animated Pulse Ring -->
-                    <div
-                        class="absolute inset-0 bg-rose-200 rounded-xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-700 animate-pulse">
-                    </div>
-
+            <div class="text-center px-4">
+                <div class="mb-10 cursor-pointer transform hover:scale-110 transition-transform duration-700"
+                    onclick="nextPage(2)">
                     <!-- Envelope Graphic -->
                     <div
-                        class="w-52 h-36 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] rounded-xl mx-auto relative flex items-center justify-center border-t-[40px] border-rose-50 transform group-hover:-translate-y-2 transition-transform duration-500">
+                        class="w-44 h-32 md:w-56 md:h-40 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-xl mx-auto relative flex items-center justify-center border-t-[35px] md:border-t-[45px] border-rose-50">
                         <div
-                            class="absolute -top-6 w-12 h-12 bg-rose-400 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                            <span class="text-white text-lg">❤</span>
+                            class="absolute -top-5 md:-top-7 w-10 h-10 md:w-14 md:h-14 bg-rose-400 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                            <span class="text-white text-sm md:text-lg">❤</span>
                         </div>
-                        <p class="cursive text-3xl text-rose-200 pt-2">For You</p>
+                        <p class="cursive text-2xl md:text-3xl text-rose-200">For You</p>
                     </div>
                 </div>
-                <h2 class="serif text-5xl text-rose-900 italic font-medium tracking-wide">To My Dearest...</h2>
-                <p class="mt-4 text-rose-400/80 text-sm uppercase tracking-widest animate-bounce">Tap to open</p>
+                <h2 class="serif text-3xl md:text-5xl text-rose-900 italic font-medium">To My Dearest...</h2>
             </div>
         </div>
 
-        <!-- PAGE 2: PERSONAL MESSAGE -->
+        <!-- SECTION 2: THE HEARTFELT MESSAGE -->
         <div id="page2" class="page hidden">
-            <div class="glass p-10 md:p-16 rounded-[3rem] text-center max-w-xl w-full relative mx-4">
-                <div class="absolute -top-12 -left-12 text-8xl opacity-10 rotate-12 pointer-events-none select-none">🌹
-                </div>
-                <h1 class="serif text-4xl text-rose-900 mb-8 tracking-tight italic font-bold">Why you mean so much...
-                </h1>
-
-                <div class="min-h-[200px] mb-10 flex items-center justify-center">
-                    <p id="typewriter-text" class="text-rose-800/80 leading-loose italic text-xl typewriter-text"></p>
-                </div>
-
+            <div
+                class="glass p-10 md:p-20 rounded-[3rem] md:rounded-[4.5rem] text-center max-w-2xl w-full mx-4 relative">
                 <div
-                    class="h-px bg-gradient-to-r from-transparent via-rose-200 to-transparent w-full max-w-[200px] mx-auto mb-8">
+                    class="hidden md:block absolute -top-12 -left-12 w-36 h-36 opacity-10 rotate-12 pointer-events-none text-6xl">
+                    🌹</div>
+                <h1 class="serif text-3xl md:text-5xl text-rose-900 mb-8 md:mb-12 tracking-tight italic font-bold">Why
+                    you mean so much...</h1>
+                <div class="space-y-6 md:space-y-10 mb-10 md:mb-16">
+                    <p class="text-rose-800/70 leading-relaxed italic text-lg md:text-2xl">"In a world full of noise,
+                        you are my favorite melody. It’s the small things—the way you look when you're thinking, the
+                        kindness you show everyone, and how you make 'home' feel like a person."</p>
+                    <div
+                        class="h-px bg-gradient-to-r from-transparent via-rose-200 to-transparent w-32 md:w-48 mx-auto">
+                    </div>
+                    <p class="font-bold text-rose-400 uppercase tracking-[0.3em] text-[10px] md:text-xs">A journey of a
+                        thousand miles begins with you</p>
                 </div>
-
                 <button onclick="nextPage(3)"
-                    class="btn-berry text-white px-12 py-4 rounded-full font-bold text-lg shadow-lg">
-                    Continue <span class="ml-2">→</span>
+                    class="btn-berry text-white px-10 md:px-16 py-4 rounded-full font-bold text-lg md:text-xl">
+                    Next Page
                 </button>
             </div>
         </div>
 
-        <!-- PAGE 3: DATE PLAN SELECTION -->
+        <!-- SECTION 3: INTERACTIVE DATE PLANNING -->
         <div id="page3" class="page hidden">
-            <div class="glass p-8 md:p-14 rounded-[3rem] text-center max-w-4xl w-full mx-4">
-                <h1 class="cursive text-5xl text-rose-500 mb-4">Our Next Adventure</h1>
-                <p class="text-rose-400 mb-12 text-sm font-semibold tracking-wide uppercase">Select your perfect date
-                </p>
+            <div class="glass p-8 md:p-16 rounded-[3rem] text-center max-w-5xl w-full mx-4">
+                <h1 class="cursive text-4xl md:text-6xl text-rose-500 mb-4 md:mb-6">Our next adventure...</h1>
+                <p class="text-rose-300 mb-8 md:mb-12 text-sm md:text-base font-medium tracking-wide uppercase">Pick the
+                    one you'd love to do first!</p>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <div class="date-option polaroid p-4 cursor-pointer" onclick="selectDate(this)">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-10 md:mb-16">
+                    <div class="date-option polaroid p-4" onclick="selectDate(this)">
                         <div
-                            class="bg-rose-50/50 h-40 rounded-lg mb-4 flex items-center justify-center text-6xl shadow-inner">
+                            class="bg-rose-50/50 h-32 md:h-48 rounded-lg mb-5 flex items-center justify-center text-5xl md:text-7xl">
                             🚗</div>
-                        <h3 class="font-bold text-rose-900 text-lg">Coastal Drive</h3>
-                        <p class="text-[10px] text-rose-400 mt-2 uppercase tracking-widest font-bold">Ocean Breeze</p>
+                        <h3 class="font-bold text-rose-900 text-sm md:text-lg">Coastal Drive</h3>
+                        <p class="text-[10px] text-rose-300 mt-2 uppercase tracking-widest">Sunsets & Playlists</p>
                     </div>
-                    <div class="date-option polaroid p-4 cursor-pointer" onclick="selectDate(this)"
-                        style="transition-delay: 100ms">
+                    <div class="date-option polaroid p-4" onclick="selectDate(this)" style="transform: rotate(2deg)">
                         <div
-                            class="bg-rose-50/50 h-40 rounded-lg mb-4 flex items-center justify-center text-6xl shadow-inner">
+                            class="bg-rose-50/50 h-32 md:h-48 rounded-lg mb-5 flex items-center justify-center text-5xl md:text-7xl">
                             🌲</div>
-                        <h3 class="font-bold text-rose-900 text-lg">Cabin Retreat</h3>
-                        <p class="text-[10px] text-rose-400 mt-2 uppercase tracking-widest font-bold">Cozy Nights</p>
+                        <h3 class="font-bold text-rose-900 text-sm md:text-lg">Cabin Retreat</h3>
+                        <p class="text-[10px] text-rose-300 mt-2 uppercase tracking-widest">Starlight & Bonfires</p>
                     </div>
-                    <div class="date-option polaroid p-4 cursor-pointer" onclick="selectDate(this)"
-                        style="transition-delay: 200ms">
+                    <div class="date-option polaroid p-4" onclick="selectDate(this)" style="transform: rotate(-1deg)">
                         <div
-                            class="bg-rose-50/50 h-40 rounded-lg mb-4 flex items-center justify-center text-6xl shadow-inner">
+                            class="bg-rose-50/50 h-32 md:h-48 rounded-lg mb-5 flex items-center justify-center text-5xl md:text-7xl">
                             ☕</div>
-                        <h3 class="font-bold text-rose-900 text-lg">Bookstore Date</h3>
-                        <p class="text-[10px] text-rose-400 mt-2 uppercase tracking-widest font-bold">Coffee & Books</p>
+                        <h3 class="font-bold text-rose-900 text-sm md:text-lg">Bookstore Date</h3>
+                        <p class="text-[10px] text-rose-300 mt-2 uppercase tracking-widest">Coffee & Cuddles</p>
                     </div>
                 </div>
 
                 <button id="adventureBtn" onclick="nextPage(4)"
-                    class="opacity-30 pointer-events-none btn-berry text-white px-16 py-4 rounded-full font-bold text-lg shadow-xl transition-all duration-300">
-                    Choose an Adventure first
+                    class="opacity-30 pointer-events-none btn-berry text-white px-12 md:px-20 py-4 md:py-5 rounded-full font-bold text-lg md:text-xl">
+                    Confirm Adventure
                 </button>
             </div>
         </div>
 
-        <!-- PAGE 4: THE BIG QUESTION -->
+        <!-- SECTION 4: THE PROPOSAL -->
         <div id="page4" class="page hidden">
-            <div class="glass p-12 md:p-20 rounded-[4rem] text-center max-w-3xl w-full mx-4 relative overflow-hidden">
-                <!-- Decorative background elements -->
-                <div
-                    class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-rose-300 to-transparent opacity-50">
-                </div>
-
+            <div class="glass p-10 md:p-20 rounded-[4rem] text-center max-w-3xl w-full mx-4">
                 <h2 id="questionHeader"
-                    class="serif text-5xl md:text-7xl text-rose-900 mb-16 italic font-bold leading-tight">Will you be my
+                    class="serif text-4xl md:text-7xl text-rose-900 mb-16 md:mb-24 italic font-bold">Will you be my
                     Valentine?</h2>
 
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-10 min-h-[120px] relative z-10">
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-10 md:gap-16 min-h-[160px]">
                     <button id="yesBtn" onclick="celebrate()"
-                        class="btn-berry text-white px-20 py-6 rounded-2xl font-bold text-3xl shadow-2xl hover:scale-110 transition-transform duration-300">
-                        YES! 💖
+                        class="btn-berry text-white px-16 md:px-24 py-6 md:py-8 rounded-3xl font-bold text-4xl md:text-5xl shadow-2xl">
+                        YES
                     </button>
-                    <!-- NO BUTTON: Bouncing and Teleporting -->
+                    <!-- NO BUTTON: COMMENT LOGIC (See script for comments above this logic) -->
                     <button id="noBtn" onmouseover="dodge(event)" onclick="dodge(event)"
-                        class="text-rose-300 font-bold hover:text-rose-500 text-xl transition-colors bouncing px-8 py-4 bg-white/50 rounded-xl border border-rose-100 hover:bg-white hover:border-rose-200">
+                        class="text-rose-200 font-bold hover:text-rose-400 text-xl md:text-2xl transition-colors bouncing p-4">
                         No
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- PAGE 5: SUCCESS SCREEN -->
+        <!-- SECTION 5: SUCCESS & FINALE -->
         <div id="page5" class="page hidden">
-            <div class="text-center z-10">
+            <div class="text-center px-4">
                 <div
-                    class="w-40 h-40 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-10 shadow-[0_20px_60px_rgba(255,133,161,0.4)] animate-pulse">
-                    <span class="text-8xl">💍</span>
+                    class="w-32 h-32 md:w-44 md:h-44 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-10 md:mb-14 shadow-[0_15px_40px_rgba(255,133,161,0.2)] animate-pulse">
+                    <span class="text-6xl md:text-8xl">💍</span>
                 </div>
-                <h1 class="serif text-6xl md:text-8xl text-rose-900 mb-8 italic font-bold drop-shadow-sm">Forever
-                    Begins...</h1>
-                <p class="text-2xl text-rose-500 font-medium mb-16 tracking-widest">I'm the luckiest person in the
-                    world.</p>
+                <h1 class="serif text-6xl md:text-8xl text-rose-900 mb-4 md:mb-8 italic font-bold">Forever Begins...
+                </h1>
+                <p class="text-2xl md:text-4xl text-rose-400 font-semibold mb-12 md:mb-20 tracking-widest">I'm the
+                    luckiest person alive.</p>
                 <div
-                    class="glass p-12 rounded-[2.5rem] border-dashed border-2 border-rose-200 max-w-lg mx-auto bg-white/60">
-                    <p class="text-2xl text-rose-800/80 italic leading-relaxed font-serif">"Pack your heart... our
-                        adventure starts today. I promise to love you through every sunset and every road trip."</p>
+                    class="glass p-10 md:p-14 rounded-[2.5rem] border-dashed border-2 border-rose-100 max-w-2xl mx-auto">
+                    <p class="text-lg md:text-2xl text-rose-800/60 italic leading-relaxed font-medium">"Pack your
+                        heart... our adventure starts today. I promise to love you through every sunset and every road
+                        trip."</p>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- FIXED PROGRESS BAR -->
-    <div id="progress" class="progress-container transition-opacity duration-1000">
+    <!-- WEBSITE NAVIGATION INDICATOR -->
+    <div id="progress" class="fixed bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-5 z-50">
         <div class="progress-line">
             <div id="progress-fill" class="progress-fill"></div>
         </div>
+        <p class="text-[10px] uppercase tracking-widest text-rose-300 font-bold">Our Journey</p>
     </div>
 
-    <!-- Logic -->
     <script src="js/script.js"></script>
 </body>
 
