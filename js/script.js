@@ -33,16 +33,32 @@ function selectDate(el) {
  * Page Navigation Logic
  */
 function nextPage(n) {
-    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-    const target = document.getElementById(`page${n}`);
-    if (target) target.classList.remove('hidden');
+    // 1. Fade out all current pages
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.add('hidden');
+        p.classList.remove('opacity-100');
+        p.classList.add('opacity-0');
+    });
 
-    // Update the website's progress bar
-    const fill = document.getElementById('progress-fill');
-    fill.style.width = ((n - 1) / 4 * 100) + '%';
+    // 2. Wait for fade out, then show new page
+    setTimeout(() => {
+        const target = document.getElementById(`page${n}`);
+        if (target) {
+            target.classList.remove('hidden');
+            // Small delay to allow display:flex to apply before adding opacity
+            setTimeout(() => {
+                target.classList.remove('opacity-0');
+                target.classList.add('opacity-100');
+            }, 50);
+        }
 
-    // Hide progress on the finale
-    if (n === 5) document.getElementById('progress').style.display = 'none';
+        // Update the website's progress bar
+        const fill = document.getElementById('progress-fill');
+        if (fill) fill.style.width = ((n - 1) / 4 * 100) + '%';
+
+        // Hide progress on the finale
+        if (n === 5) document.getElementById('progress').style.display = 'none';
+    }, 600); // Wait for the exit transition
 }
 
 /**
