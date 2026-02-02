@@ -184,6 +184,7 @@ const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // 2. This function creates an <iframe> (and YouTube player) after the API code downloads
+// 2. This function creates an <iframe> (and YouTube player) after the API code downloads
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-player', {
         height: '0',
@@ -192,8 +193,6 @@ function onYouTubeIframeAPIReady() {
         playerVars: {
             'autoplay': 1,
             'controls': 0,
-            'loop': 1,
-            'playlist': 'PkQIns7kawI', // Required for loop to work
             'playsinline': 1,
             'start': 3 // Start from 3rd second
         },
@@ -211,7 +210,7 @@ function onPlayerReady(event) {
 }
 
 function onPlayerStateChange(event) {
-    // 1 = Playing, 2 = Paused
+    // 1 = Playing, 2 = Paused, 0 = Ended
     if (event.data == YT.PlayerState.PLAYING) {
         isPlaying = true;
         musicIcon.innerText = "🎵";
@@ -222,6 +221,10 @@ function onPlayerStateChange(event) {
         musicIcon.innerText = "🔇";
         musicText.innerText = "Play Music";
         musicIcon.classList.remove('animate-spin');
+    } else if (event.data == YT.PlayerState.ENDED) {
+        // Custom Loop: When finished, restart from 3rd second
+        player.seekTo(3);
+        player.playVideo();
     }
 }
 
