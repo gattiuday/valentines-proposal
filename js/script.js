@@ -188,13 +188,14 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-player', {
         height: '0',
         width: '0',
-        videoId: 'r80HA82V4EM', // The requested song
+        videoId: 'PkQIns7kawI', // The requested song
         playerVars: {
-            'autoplay': 1, // Try to autoplay
+            'autoplay': 1,
             'controls': 0,
             'loop': 1,
-            'playlist': 'r80HA82V4EM', // Required for loop to work
-            'playsinline': 1
+            'playlist': 'PkQIns7kawI', // Required for loop to work
+            'playsinline': 1,
+            'start': 3 // Start from 3rd second
         },
         events: {
             'onReady': onPlayerReady,
