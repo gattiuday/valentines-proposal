@@ -169,52 +169,75 @@ function celebrate() {
 /**
  * Audio Management
  */
-const audio = document.getElementById('bgMusic');
+/**
+ * Audio Management via YouTube API
+ */
 const musicIcon = document.getElementById('musicIcon');
 const musicText = document.getElementById('musicText');
 let isPlaying = false;
+let player;
 
-function toggleMusic() {
-    if (isPlaying) {
-        audio.pause();
+// 1. Load the IFrame Player API code asynchronously
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// 2. This function creates an <iframe> (and YouTube player) after the API code downloads
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: 'r80HA82V4EM', // The requested song
+        playerVars: {
+            'autoplay': 0,
+            'controls': 0,
+            'loop': 1,
+            'playlist': 'r80HA82V4EM', // Required for loop to work
+            'playsinline': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    // Player is ready, but we wait for interaction to play
+    console.log("YouTube Player Ready");
+}
+
+function onPlayerStateChange(event) {
+    // 1 = Playing, 2 = Paused
+    if (event.data == YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        musicIcon.innerText = "🎵";
+        musicText.innerText = "Pause Music";
+        musicIcon.classList.add('animate-spin');
+    } else if (event.data == YT.PlayerState.PAUSED) {
+        isPlaying = false;
         musicIcon.innerText = "🔇";
         musicText.innerText = "Play Music";
         musicIcon.classList.remove('animate-spin');
-    } else {
-        audio.play().then(() => {
-            musicIcon.innerText = "🎵";
-            musicText.innerText = "Pause Music";
-            musicIcon.classList.add('animate-spin');
-        }).catch(e => console.log("Audio play failed:", e));
     }
-    isPlaying = !isPlaying;
+}
+
+function toggleMusic() {
+    if (!player || !player.playVideo) return;
+
+    if (isPlaying) {
+        player.pauseVideo();
+    } else {
+        player.playVideo();
+    }
 }
 
 // Auto-play music on first interaction (browser policy)
-// Auto-play music logic
-window.addEventListener('load', () => {
-    const attemptPlay = audio.play();
-    if (attemptPlay !== undefined) {
-        attemptPlay.then(() => {
-            musicIcon.innerText = "🎵";
-            musicText.innerText = "Pause Music";
-            musicIcon.classList.add('animate-spin');
-            isPlaying = true;
-        }).catch(error => {
-            console.log("Autoplay prevented:", error);
-            // Show a subtle hint to click
-            musicText.innerText = "Click to Play 🎵";
-            musicIcon.classList.add('animate-bounce');
-        });
-    }
-});
-
 let hasInteracted = false;
 document.addEventListener('click', () => {
-    if (!hasInteracted) {
-        if (!isPlaying) {
-            toggleMusic();
-        }
+    if (!hasInteracted && player && player.playVideo) {
+        player.playVideo();
         hasInteracted = true;
     }
 }, { once: true });
