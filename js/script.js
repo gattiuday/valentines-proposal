@@ -190,7 +190,7 @@ function onYouTubeIframeAPIReady() {
         width: '0',
         videoId: 'r80HA82V4EM', // The requested song
         playerVars: {
-            'autoplay': 0,
+            'autoplay': 1, // Try to autoplay
             'controls': 0,
             'loop': 1,
             'playlist': 'r80HA82V4EM', // Required for loop to work
@@ -204,8 +204,9 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerReady(event) {
-    // Player is ready, but we wait for interaction to play
-    console.log("YouTube Player Ready");
+    // Attempt to play immediately
+    event.target.playVideo();
+    console.log("YouTube Player Ready - Attempting Autoplay");
 }
 
 function onPlayerStateChange(event) {
