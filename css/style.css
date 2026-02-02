@@ -45,6 +45,51 @@ body {
     box-shadow: 0 20px 50px rgba(154, 73, 73, 0.15);
 }
 
+/* Animations */
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.1);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.1);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+}
+
+.heartbeat {
+    animation: heartbeat 2s infinite ease-in-out;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+.floating {
+    animation: float 3s ease-in-out infinite;
+}
+
 /* Web Page Transitions - Smooth fades for a professional website feel */
 .page-container {
     width: 100%;

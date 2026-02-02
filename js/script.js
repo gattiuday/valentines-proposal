@@ -143,3 +143,45 @@ function celebrate() {
         requestAnimationFrame(step);
     }
 }
+
+/**
+ * Audio Management
+ */
+const audio = document.getElementById('bgMusic');
+const musicIcon = document.getElementById('musicIcon');
+const musicText = document.getElementById('musicText');
+let isPlaying = false;
+
+function toggleMusic() {
+    if (isPlaying) {
+        audio.pause();
+        musicIcon.innerText = "🔇";
+        musicText.innerText = "Play Music";
+        musicIcon.classList.remove('animate-spin');
+    } else {
+        audio.play().then(() => {
+            musicIcon.innerText = "🎵";
+            musicText.innerText = "Pause Music";
+            musicIcon.classList.add('animate-spin');
+        }).catch(e => console.log("Audio play failed:", e));
+    }
+    isPlaying = !isPlaying;
+}
+
+// Auto-play music on first interaction (browser policy)
+let hasInteracted = false;
+document.addEventListener('click', () => {
+    if (!hasInteracted && !isPlaying) {
+        toggleMusic();
+        hasInteracted = true;
+    }
+}, { once: true });
+
+// Mobile Touch Support for No Button
+const noBtn = document.getElementById('noBtn');
+if (noBtn) {
+    noBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevent click
+        dodge(e);
+    }, { passive: false });
+}
