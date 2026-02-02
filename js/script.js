@@ -194,7 +194,7 @@ function onYouTubeIframeAPIReady() {
             'autoplay': 1,
             'controls': 0,
             'playsinline': 1,
-            'start': 3 // Start from 3rd second
+            'start': 1 // Start from 1st second
         },
         events: {
             'onReady': onPlayerReady,
@@ -222,8 +222,8 @@ function onPlayerStateChange(event) {
         musicText.innerText = "Play Music";
         musicIcon.classList.remove('animate-spin');
     } else if (event.data == YT.PlayerState.ENDED) {
-        // Custom Loop: When finished, restart from 3rd second
-        player.seekTo(3);
+        // Custom Loop: When finished, restart from 1st second
+        player.seekTo(1);
         player.playVideo();
     }
 }
