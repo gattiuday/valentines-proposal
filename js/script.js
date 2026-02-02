@@ -112,9 +112,10 @@ function dodge(e) {
  */
 function celebrate() {
     // Hide the comment bubble immediately upon success
-    document.getElementById('noComment').style.opacity = "0";
+    const comment = document.getElementById('noComment');
+    if (comment) comment.style.opacity = "0";
 
-    nextPage(5);
+    // 1. Trigger Confetti FIRST for immediate feedback
     const container = document.body;
     const colors = ['#ff85a1', '#ff4d6d', '#ffb3c1', '#ffd700', '#ffffff'];
 
@@ -158,6 +159,11 @@ function celebrate() {
         }
         requestAnimationFrame(step);
     }
+
+    // 2. Transition to Final Page after a glorious delay
+    setTimeout(() => {
+        nextPage(5);
+    }, 1500);
 }
 
 /**
