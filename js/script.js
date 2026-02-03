@@ -79,22 +79,14 @@ function dodge(e) {
     comment.innerText = noTexts[Math.min(noCount - 1, noTexts.length - 1)];
     comment.style.opacity = "1";
 
-    // 2. STABLE LOGIC: Keep the button in place
-    // The user requested a stable button beside the Yes button.
-    // We remove the random movement but keep the text updates.
+    // 2. STATIC LOGIC: No movement.
+    // The button stays fixed in layout. We just update the text bubble position.
 
-    // Ensure button stays in layout flow
-    btn.style.position = 'relative';
-    btn.style.left = 'auto';
-    btn.style.top = 'auto';
-    btn.style.transform = 'none';
-
-    // 3. Move the comment bubble to stay EXACTLY centered on top of the button
-    // We calculate position dynamically based on the button's current static location
+    // Position the bubble relative to the button's current static location
     const rect = btn.getBoundingClientRect();
     const bubbleWidth = comment.offsetWidth || 150; // Fallback width
 
-    // Position bubble relative to viewport (since it's fixed)
+    // Position bubble relative to viewport
     const bubbleX = rect.left + (rect.width / 2) - (bubbleWidth / 2);
     const bubbleY = rect.top - 65; // 65px above button
 
