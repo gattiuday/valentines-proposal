@@ -79,56 +79,27 @@ function dodge(e) {
     comment.innerText = noTexts[Math.min(noCount - 1, noTexts.length - 1)];
     comment.style.opacity = "1";
 
-    // 2. DODGE LOGIC: Roam around the YES button
-    // We want the No button to stay close to the Yes button (playful chase)
-    // but still strictly within the card boundaries.
+    // 2. STABLE LOGIC: Keep the button in place
+    // The user requested a stable button beside the Yes button.
+    // We remove the random movement but keep the text updates.
 
-    const yesBtn = document.getElementById('yesBtn');
-    const container = document.querySelector('#page4 .glass');
-
-    const yesRect = yesBtn.getBoundingClientRect();
-    const cardRect = container.getBoundingClientRect();
-
-    const btnWidth = btn.offsetWidth;
-    const btnHeight = btn.offsetHeight;
-
-    // 2a. Define the Safe Zone (Card Boundaries with Margins)
-    const padX = 20;
-    const padY = 80; // Space for bubble
-    const minX = cardRect.left + padX;
-    const maxX = cardRect.right - btnWidth - padX;
-    const minY = cardRect.top + padY;
-    const maxY = cardRect.bottom - btnHeight - padX;
-
-    // Ensure Safe Zone is valid
-    const safeMinX = Math.min(minX, maxX); // Handle small screens
-    const safeMaxX = Math.max(minX, maxX);
-    const safeMinY = Math.min(minY, maxY);
-    const safeMaxY = Math.max(minY, maxY);
-
-    // 2b. Calculate "Orbit" Position relative to Yes Button
-    // Range: +/- 150px from Yes button center
-    const radius = 150;
-    const yesCenterX = yesRect.left + (yesRect.width / 2);
-    const yesCenterY = yesRect.top + (yesRect.height / 2);
-
-    let targetX = yesCenterX + (Math.random() * radius * 2 - radius) - (btnWidth / 2);
-    let targetY = yesCenterY + (Math.random() * radius * 2 - radius) - (btnHeight / 2);
-
-    // 2c. Clamp "Orbit" Position to Safe Zone
-    // This ensures it never leaves the card even if the orbit circle extends out
-    const x = Math.min(Math.max(targetX, safeMinX), safeMaxX);
-    const y = Math.min(Math.max(targetY, safeMinY), safeMaxY);
-
-    // Move the button
-    btn.style.position = 'fixed';
-    btn.style.left = `${x}px`;
-    btn.style.top = `${y}px`;
+    // Ensure button stays in layout flow
+    btn.style.position = 'relative';
+    btn.style.left = 'auto';
+    btn.style.top = 'auto';
+    btn.style.transform = 'none';
 
     // 3. Move the comment bubble to stay EXACTLY centered on top of the button
-    // Centering: X = ButtonLeft + (ButtonWidth/2) - (CommentWidth/2)
-    comment.style.left = `${x + (btnWidth / 2) - (comment.offsetWidth / 2)}px`;
-    comment.style.top = `${y - 65}px`;
+    // We calculate position dynamically based on the button's current static location
+    const rect = btn.getBoundingClientRect();
+    const bubbleWidth = comment.offsetWidth || 150; // Fallback width
+
+    // Position bubble relative to viewport (since it's fixed)
+    const bubbleX = rect.left + (rect.width / 2) - (bubbleWidth / 2);
+    const bubbleY = rect.top - 65; // 65px above button
+
+    comment.style.left = `${bubbleX}px`;
+    comment.style.top = `${bubbleY}px`;
 
     // 4. Update the website header text based on user persistence
     if (noCount === 5) {
